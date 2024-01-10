@@ -1,0 +1,155 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Bebas Neue', sans-serif;
+    font-family: 'Montserrat', sans-serif;
+    font-family: 'Oswald', sans-serif;
+    font-family: 'Poppins', sans-serif;
+    font-family: 'Roboto', sans-serif;
+    padding: 0;
+    margin: 0;
+}
+
+#formContainer {
+    display: flex;
+    flex-direction: row;
+    border: 1px solid rgb(142, 139, 139);
+    margin: auto;
+    margin-top: 6%;
+    width: 850px;
+    height: 500px;
+    display: flex;
+    border-radius: 5px;
+}
+
+#formContainer #formLeft {
+    display: flex;
+    flex-direction: column;
+    margin: 30px;
+    margin-right: 0px;
+}
+
+#formContainer #formLeft #fundo {
+    color: #f5d63a;
+}
+
+#formContainer #formLeft #createF {
+    font-size: 20px;
+    font-weight: 500px;
+}
+
+#formContainer #formLeft #name{
+    display: flex;
+    flex-direction: row;
+}
+
+#formContainer #formLeft #firstName,
+#lastName {
+    padding: 10px;
+    height: 30px;
+    width: 160px;
+    border-radius: 3px;
+}
+
+#formContainer #formLeft #firstName {
+    margin-right: 15px;
+}
+
+#formContainer #formLeft #userName {
+    width: 100%;
+    height: 15px;
+    padding: 10px;
+    margin-top: 15px;
+    border-radius: 3px;
+}
+
+#formContainer #formLeft #userNameInfo {
+    padding-top: -15px;
+    font-size: 11px;
+    margin-top: 0;
+}
+
+#formContainer #formLeft #pass{
+    display: flex;
+    flex-direction: row;
+}
+
+#formContainer #formLeft #firstpass,
+#confpass {
+    padding: 10px;
+    width: 160px;
+    height: 15px;
+    border-radius: 3px;
+    margin-top: 15px;
+}
+
+#formContainer #formLeft #firstpass {
+    margin-right: 15px;
+}
+
+#formContainer #formLeft #passInfo {
+    font-size: 11px;
+    margin-top: 5px;
+}
+
+#formContainer #formLeft #signDiv {
+    /* border: 1px solid red; */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 50px;
+}
+
+#formContainer #formLeft #signDiv a {
+    margin-top: 8px;
+    text-decoration: none;
+}
+
+#formContainer #formLeft #signDiv a:hover {
+    text-decoration: underline;
+}
+
+#formContainer #formLeft #signDiv #register {
+    width: 80px;
+    height: 40px;
+    background-color: rgb(95, 95, 218);
+    color: white;
+    padding: 6px 10px;
+    border-radius: 5px;
+    border: none;
+    transition: all 1s ease;
+}
+#formContainer #formLeft #signDiv #register:hover{
+    background-color: rgb(20, 20, 236);
+}
+
+/* *********************************** */
+#formContainer #formRight {
+    width: 45%;
+}
+
+#formContainer #formRight {
+    margin-top: 50px;
+    background: url(images.png) no-repeat;
+    background-size: 100%;
+}
+
+#formContainer #formRight p {
+    margin-top: 75%;
+    margin-left: 50px;
+    margin-right: 45px;
+    font-size: 17px;
+}
+#text{
+    display: flex;
+    flex-direction: row;
+    width: 800px;
+    height: 450px;
+    margin: auto;
+    padding-top: 14px;
+    font-size: 13px;
+}
