@@ -4,11 +4,40 @@ import './Signup.css'; // Import the CSS file
 import { Button} from '@mui/material';
 import TextField from '@mui/material/TextField';
 import { useNavigate } from 'react-router-dom';
+import { SignupApi } from '../utils/userapi';
 
 const SignupForm = () => {
+  let fname = "";
+  let lname = "";
+  let username = "";
+  let password = "";
   const route = useNavigate()
   const handleNavigation=()=>{
       route("/")
+  }
+
+  const setfName = (e)=>{
+    fname = e.target.value;
+  }
+
+  const setlName = (e)=>{
+    lname = e.target.value;
+  }
+
+  const setUserName = (e)=>{
+    username = e.target.value;
+  }
+
+  const setPassword = (e)=>{
+    password = e.target.value;
+  }
+
+  const handleRegister = ()=>{
+      const res = SignupApi({
+        name:`${fname} ${lname}`,
+        email:username,
+        password:password
+      })
   }
   return (
     <div>
@@ -21,19 +50,19 @@ const SignupForm = () => {
           <br />
         </div>
         <div id="name" style={{display:'flex',flexDirection:"row", gap:'20px'}}>
-          <TextField id="firstName" label="first name" variant="outlined" required type="text"/>
-          <TextField id="lastName" label="last name" variant="outlined" required type="text"/>
+          <TextField id="firstName" label="first name" variant="outlined" required type="text" onChange={setfName}/>
+          <TextField id="lastName" label="last name" variant="outlined" required type="text" onChange={setlName}/>
         </div>
-        <TextField id="userName" label="username" variant="outlined" required type="text"/>
+        <TextField id="userName" label="username" variant="outlined" required type="text"  onChange={setUserName}/>
         <p id="userNameInfo">You can use letters, numbers & periods</p>
         <div id="pass" style={{display:'flex',flexDirection:"row", gap:'20px'}}>
           <TextField id="firstpass" label="Password" variant="outlined" required type="text"/>
-          <TextField id="confpass" label="Confirm" variant="outlined" required type="text"/>
+          <TextField id="confpass" label="Confirm" variant="outlined" required type="text" onChange={setPassword}/>
         </div>
         <p id="passInfo">Use 8 or more characters with a mix of letters, numbers & symbols</p>
         <div id="signDiv">
           <Button variant="text" onClick={handleNavigation} style={{ textTransform: 'none' }}>Sign in instead</Button>
-          <Button variant="contained" style={{ textTransform: 'none' }} >Register</Button>
+          <Button variant="contained" style={{ textTransform: 'none' }} onClick={handleRegister}>Register</Button>
         </div>
       </div>
 
