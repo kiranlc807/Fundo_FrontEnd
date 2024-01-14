@@ -12,7 +12,7 @@ import {
   Delete as DeleteIcon,
 } from "@mui/icons-material";
 
-const Sidebar = ({ isOpen, toggleDrawer }) => {
+const Sidebar = ({ toggleDrawer, currState }) => {
   return (
     <Drawer
       anchor="left"
