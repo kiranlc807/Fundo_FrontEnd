@@ -16,18 +16,17 @@ import {
   AccountCircle as AccountCircleIcon,
   MenuOpen as MenuOpenIcon,
 } from "@mui/icons-material";
-import Sidebar from "./Slidebar.js";
+import Sidebar from "./Sildebar.js";
 
-const Header = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+const Header = ({toggleDrawer,currState}) => {
 
-  const toggleDrawer = (open) => () => {
-    setIsSidebarOpen(open);
+  const toggle = () =>{
+    toggleDrawer(!currState);
   };
 
   return (
     <>
-      <AppBar position="static" color="default">
+      <AppBar position="static" color="default" >
         <Toolbar>
           <IconButton
             size="large"
@@ -35,9 +34,9 @@ const Header = () => {
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
-            onClick={toggleDrawer(true)}
+            onClick={toggle}
           >
-            {isSidebarOpen ? <MenuOpenIcon /> : <MenuIcon />}
+            {currState ? <MenuOpenIcon /> : <MenuIcon />}
           </IconButton>
           <div
             style={{
@@ -65,7 +64,7 @@ const Header = () => {
             </Typography>
           </div>
           <div style={{ flexGrow: 1, display: "flex", alignItems: "center" }}>
-            <SearchIcon sx={{ mr: 1 }} />
+            <SearchIcon sx={{ mr: 1 }}/>
             <InputBase
               placeholder="Search..."
               inputProps={{ "aria-label": "search" }}
@@ -93,7 +92,7 @@ const Header = () => {
           </div>
         </Toolbar>
       </AppBar>
-      <Sidebar isOpen={isSidebarOpen} toggleDrawer={toggleDrawer} />
+      {/* <Sidebar isOpen={isSidebarOpen} toggleDrawer={toggleDrawer} /> */}
     </>
   );
 };

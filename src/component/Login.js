@@ -32,19 +32,23 @@ const LoginForm = () => {
     return isValidEmail;
   };
 
-  const handleLogin = ()=>{
+  const handleLogin = async()=>{
 
     if (!validateEmail(userName)) {
       return;
     }
 
-    const res = LoginApi({
+    const res = await LoginApi({
       email:userName,
       password:password
-    })
+    });
+    if(res.status===201){
+      route("/dashboard/notes")
+    }
+    
   }
 
-  const handleForgorPassword = () =>{
+  const handleForgotPassword = () =>{
     const res = ForgotPasswordApi({
       email:userName
     });
@@ -64,10 +68,10 @@ const LoginForm = () => {
             }}
             error={!isValidEmail}
             helperText={!isValidEmail ? 'Invalid email address' : ''}/>
-          <TextField id="outlined-basic2" label="Password" variant="outlined" required onChange={setPassword}/>
+          <TextField id="outlined-basic2" label="Password" variant="outlined" required onChange={setPassword} type='password'/>
         </div>
         <div>
-        <Button variant="text" style={{fontSize:"12px",textTransform: 'none'}} onClick={handleForgorPassword}>Forgot Password </Button>
+        <Button variant="text" style={{fontSize:"12px",textTransform: 'none'}} onClick={handleForgotPassword}>Forgot Password </Button>
         </div>
         <br />
         <div className="submit-btn" >

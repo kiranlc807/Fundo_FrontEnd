@@ -12,14 +12,11 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import GroupIcon from "@mui/icons-material/Group";
 import ColorLensIcon from "@mui/icons-material/ColorLens";
 import InsertPhotoIcon from "@mui/icons-material/InsertPhoto";
+import {TrashNote} from "../utils/noteapi"
+import { ArchiveNote } from "../utils/noteapi";
 
-const NoteCard = ({ note }) => {
-  const { title, description, color } = {
-    title: "Hi",
-    description: "Hello",
-    color: "pink",
-  };
-
+const NoteCard = ({ note,updateNoteList }) => {
+  const { title, description, color } = note;
   const [menuAnchorEl, setMenuAnchorEl] = useState(null);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [editedDescription, setEditedDescription] = useState(description);
@@ -50,6 +47,35 @@ const NoteCard = ({ note }) => {
     }
   };
 
+  const onColorChange = ()=>{
+
+  };
+
+  const onArchive = async(noteID)=>{
+      const res = await ArchiveNote(noteID);
+      
+      if(!res.data.archived){
+        alert("UnArhived Successfully");
+        updateNoteList(noteID,"unarchive");
+      }
+      else{
+        alert("Arhived Successfully");
+        updateNoteList(noteID,"archive");
+      }
+      
+  };
+
+  const onAddImage = () =>{
+
+  } 
+
+  const onDelete =async (noteId)=>{
+    const del=updateNoteList(noteId,"trash");
+    if(del===null){
+      return;
+    }
+    const res = await TrashNote(noteId);
+  }
   return (
     <Paper
       elevation={3}
@@ -77,7 +103,7 @@ const NoteCard = ({ note }) => {
         }}
       >
         <div>
-          <IconButton aria-label="Archive" onClick={() => onArchive(note.id)}>
+          <IconButton aria-label="Archive" onClick={() => onArchive(note._id)}>
             <ArchiveIcon />
           </IconButton>
           <IconButton aria-label="remind me">
@@ -107,7 +133,7 @@ const NoteCard = ({ note }) => {
             onClose={handleCloseMenu}
           >
             <MenuItem onClick={handleEditNote}>Edit</MenuItem>
-            <MenuItem onClick={() => onDelete(note.id)}>Delete</MenuItem>
+            <MenuItem onClick={() => onDelete(note._id)}>Delete</MenuItem>
           </Menu>
         </div>
       </div>

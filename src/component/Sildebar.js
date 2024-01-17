@@ -11,13 +11,22 @@ import {
   Archive as ArchiveIcon,
   Delete as DeleteIcon,
 } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
-const Sidebar = ({ toggleDrawer, currState }) => {
+
+
+const Sidebar = ({ drawerState, toggleDrawer }) => {
+  const route = useNavigate();
+
+  const handleSideBarIcon = (path)=>{
+    route(`/dashboard${path}`);
+  }
+  
   return (
     <Drawer
       anchor="left"
-      open={isOpen}
-      onClose={toggleDrawer(false)}
+      open={drawerState}
+      onClose={()=>toggleDrawer(false)}
       sx={{ marginTop: "64px" ,backgroundColor:"white"}}
     >
       <List>
@@ -26,19 +35,19 @@ const Sidebar = ({ toggleDrawer, currState }) => {
           <ListItemIcon>
             <SearchIcon />
           </ListItemIcon>
-          <ListItemText primary="Notes" />
+          <ListItemText primary="Notes" onClick={()=>handleSideBarIcon('/notes')}  />
         </ListItem>
         <ListItem button>
           <ListItemIcon>
             <ArchiveIcon />
           </ListItemIcon>
-          <ListItemText primary="Archive" />
+          <ListItemText primary="Archive" onClick={()=>handleSideBarIcon('/archive')}/>
         </ListItem>
         <ListItem button>
           <ListItemIcon>
             <DeleteIcon />
           </ListItemIcon>
-          <ListItemText primary="Trash" />
+          <ListItemText primary="Trash" onClick={()=>handleSideBarIcon('/trash')}/>
         </ListItem>
         {/* Add more items as needed */}
       </List>
