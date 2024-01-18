@@ -11,7 +11,7 @@ const DashboardLayout = () => {
       <>
         <Header toggleDrawer={setOpen} currState={open} />
         <div style={{ display: "flex" }}>
-          <Sliderbar drawerState={open} toggleDrawer={setOpen} />
+          <Sliderbar drawerState={open} toggleDrawer={setOpen}/>
         </div>
           <Outlet />
       </>

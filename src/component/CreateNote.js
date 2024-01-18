@@ -52,7 +52,7 @@ const basicColors = [
   "#00FF00",
   "#AC5ADA",
   "#738684",
-  "#2FE9D2",
+  "#FFFFFF",
   "#F665FF",
   "#11FFB1",
   "#599AFE",
@@ -112,11 +112,11 @@ const CreateNote = ({ updateNoteList }) => {
   };
 
   return (
-    <Accordion >
-      <AccordionSummary>
+    <Accordion style={{backgroundColor:noteColor , boxShadow:"1px 1px 3px black"}}>
+      <AccordionSummary style={{backgroundColor:noteColor,borderRadius:"5px",}}>
         <TextField
           className={classes.root}
-          label="Title"
+          placeholder="Title"
           fullWidth
           value={noteTitle}
           onChange={(e) => setNoteTitle(e.target.value)}
@@ -132,7 +132,7 @@ const CreateNote = ({ updateNoteList }) => {
         <div style={{ width: "100%" }}>
           <TextField
             className={classes.root}
-            label="Description"
+            placeholder="Take Note....."
             multiline
             fullWidth
             value={noteDescription}
@@ -148,7 +148,7 @@ const CreateNote = ({ updateNoteList }) => {
             container
             justifyContent="space-between"
             alignItems="center"
-            style={{ marginTop: "10px" }}
+            // style={{ marginTop: "1px" }}
           >
             <Grid item>
               <IconButton onClick={(e) => setAnchorEl(e.currentTarget)}>

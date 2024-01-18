@@ -38,6 +38,16 @@ const Notes = ()=>{
             let updatedCopy = copy.filter((note)=>noteObj!==note._id)
             setNoteList([...updatedCopy]);
         }
+        else if(action==='edited'){
+            let copy = noteList;
+            let updatedCopy = copy.map((note)=>{
+                if(note._id===noteObj._id){
+                    note.title=noteObj.title
+                    note.description=noteObj.description
+                }
+            })
+            setNoteList([...updatedCopy]);
+        }
         
     }
 

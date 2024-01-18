@@ -4,22 +4,69 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import Dialog from "@mui/material/Dialog";
-import TextField from "@mui/material/TextField";
 import ArchiveIcon from "@mui/icons-material/Archive";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import GroupIcon from "@mui/icons-material/Group";
-import ColorLensIcon from "@mui/icons-material/ColorLens";
+import ColorIcon from "@mui/icons-material/ColorLens";
 import InsertPhotoIcon from "@mui/icons-material/InsertPhoto";
 import {TrashNote} from "../utils/noteapi"
 import { ArchiveNote } from "../utils/noteapi";
+import { makeStyles } from "@mui/styles";
+import { UpdateNote } from "../utils/noteapi";
+import EditNote from "./EditNote";
+
+
+const useStyles = makeStyles({
+  root: {
+    "& .MuiOutlinedInput-notchedOutline": {
+      border: "none",
+    },
+    "&:hover .MuiOutlinedInput-notchedOutline": {
+      border: "none",
+    },
+    "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+      border: "none",
+    },
+  },
+  colorGrid: {
+    display: "grid",
+    gridTemplateColumns: "repeat(4, 1fr)",
+    gridGap: "8px",
+  },
+  colorSquare: {
+    width: "40px",
+    height: "40px",
+    cursor: "pointer",
+    borderRadius: "5px",
+  },
+});
+
+
+const basicColors = [
+  "#FA1C21",
+  "#00FF00",
+  "#AC5ADA",
+  "#738684",
+  "#FFFFFF",
+  "#F665FF",
+  "#11FFB1",
+  "#599AFE",
+  "#FFB418",
+  "#FFF800",
+  "#BFC1C5",
+  "#04DBFF",
+];
 
 const NoteCard = ({ note,updateNoteList }) => {
+  const classes = useStyles();
   const { title, description, color } = note;
   const [menuAnchorEl, setMenuAnchorEl] = useState(null);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
-  const [editedDescription, setEditedDescription] = useState(description);
+  const [editedTitle, setEditedTitle] = useState('');
+  const [editedDescription, setEditedDescription] = useState('');
+  const [noteColor, setNoteColor] = useState(note.color); // Default color
+  const [anchorEl, setAnchorEl] = useState(null);
 
   const handleOpenMenu = (event) => {
     setMenuAnchorEl(event.currentTarget);
@@ -29,37 +76,29 @@ const NoteCard = ({ note,updateNoteList }) => {
     setMenuAnchorEl(null);
   };
 
-  const handleEditNote = () => {
-    setEditDialogOpen(true);
-    handleCloseMenu();
+  const handleNoteClick = () => {
+    // Open the EditNote modal when the note is clicked
+    handleSaveEdit();
   };
 
   const handleSaveEdit = () => {
-    // Add logic to save the edited description
-    console.log("Save edited description:", editedDescription);
+    // Add logic to save the edited note
+    setEditDialogOpen(true);
+  };
+
+  const handleClose = ()=>{
+    console.log(note);
+    console.log(editedTitle,editedDescription);
     setEditDialogOpen(false);
-  };
-
-  const handleColorChange = (newColor) => {
-    if (onColorChange) {
-      onColorChange(note.id, newColor);
-      handleCloseMenu();
-    }
-  };
-
-  const onColorChange = ()=>{
-
-  };
+  }
 
   const onArchive = async(noteID)=>{
       const res = await ArchiveNote(noteID);
       
       if(!res.data.archived){
-        alert("UnArhived Successfully");
         updateNoteList(noteID,"unarchive");
       }
       else{
-        alert("Arhived Successfully");
         updateNoteList(noteID,"archive");
       }
       
@@ -76,22 +115,45 @@ const NoteCard = ({ note,updateNoteList }) => {
     }
     const res = await TrashNote(noteId);
   }
+
+  const handleColorClick = (color,noteId) => {
+    setNoteColor(color);
+    setAnchorEl(null);
+    UpdateNote(noteId,{color:color});
+  };
+
+  const renderColorGrid = (noteId) => {
+    return (
+      <div className={classes.colorGrid}>
+        {basicColors.map((color, index) => (
+          <div
+            key={index}
+            className={classes.colorSquare}
+            style={{ backgroundColor: color }}
+            onClick={() => handleColorClick(color,noteId)}
+          />
+        ))}
+      </div>
+    );
+  };
+
   return (
+    <div>
     <Paper
       elevation={3}
       style={{
         padding: "16px",
         marginBottom: "16px",
         position: "relative",
-        backgroundColor: color,
+        backgroundColor: noteColor,
         maxHeight: "fit-content",
         maxWidth: "fit-content",
       }}
     >
-      <Typography variant="h6" gutterBottom>
+      <Typography variant="h6" gutterBottom onClick={handleNoteClick}>
         {title}
       </Typography>
-      <Typography variant="body1" paragraph>
+      <Typography variant="body1" paragraph onClick={handleNoteClick}>
         {description}
       </Typography>
       <div
@@ -114,10 +176,18 @@ const NoteCard = ({ note,updateNoteList }) => {
           </IconButton>
           <IconButton
             aria-label="change color"
-            onClick={() => handleColorChange("#ffcc80")}
+            onClick={(e) => setAnchorEl(e.currentTarget)}
           >
-            <ColorLensIcon />
+            <ColorIcon />
           </IconButton>
+          <Menu
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={() => setAnchorEl(null)}
+                style={{ display: "flex" }}
+              >
+            <MenuItem>{renderColorGrid(note._id)}</MenuItem>
+            </Menu>
           <IconButton
             aria-label="add image"
             onClick={() => onAddImage(note.id)}
@@ -132,27 +202,19 @@ const NoteCard = ({ note,updateNoteList }) => {
             open={Boolean(menuAnchorEl)}
             onClose={handleCloseMenu}
           >
-            <MenuItem onClick={handleEditNote}>Edit</MenuItem>
+            {/* <MenuItem onClick={handleEditNote}>Edit</MenuItem> */}
             <MenuItem onClick={() => onDelete(note._id)}>Delete</MenuItem>
           </Menu>
         </div>
       </div>
-      {/* Edit Description Dialog */}
-      <Dialog open={editDialogOpen} onClose={() => setEditDialogOpen(false)}>
-        <TextField
-          label="Edit Description"
-          variant="outlined"
-          multiline
-          rows={4}
-          fullWidth
-          value={editedDescription}
-          onChange={(e) => setEditedDescription(e.target.value)}
-        />
-        <div style={{ padding: "16px" }}>
-          <button onClick={handleSaveEdit}>Save</button>
-        </div>
-      </Dialog>
     </Paper>
+    {/* Edit Description Dialog*/}
+    <EditNote
+        open={editDialogOpen}
+        handleClose={handleClose}
+        noteObj={note}
+      />
+    </div>
   );
 };
 

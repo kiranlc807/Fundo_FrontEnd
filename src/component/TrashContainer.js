@@ -10,7 +10,7 @@ const TrashContainer = ()=>{
             try {
                 let notesResponse = await GetAllNote();
                 // Filter notes based on the conditions
-                let filteredNotes = notesResponse.data.filter(note => !note.archived && note.trashed);
+                let filteredNotes = notesResponse.data.filter(note => note.trashed);
                 setNoteList(filteredNotes);
             } catch (error) {
                 console.error("Error fetching notes:", error);
@@ -22,12 +22,12 @@ const TrashContainer = ()=>{
     }, []);
 
     const updateNoteList = async(noteId,action)=>{
+        const res = await DeleteNote(noteId);
         if(action==='trash'){
             let copy = noteList;
             let updatedCopy = copy.filter((note)=>noteId!==note._id)
             setNoteList([...updatedCopy]);
         }
-        const res = await DeleteNote(noteId);
         return res;
     }
 

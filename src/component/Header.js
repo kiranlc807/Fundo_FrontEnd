@@ -6,6 +6,8 @@ import {
   IconButton,
   InputBase,
   Badge,
+  Menu,
+  MenuItem,
 } from "@mui/material";
 import {
   Menu as MenuIcon,
@@ -17,8 +19,24 @@ import {
   MenuOpen as MenuOpenIcon,
 } from "@mui/icons-material";
 import Sidebar from "./Sildebar.js";
+import { useNavigate } from 'react-router-dom';
 
 const Header = ({toggleDrawer,currState}) => {
+  const [menuAnchorEl, setMenuAnchorEl] = useState(null);
+
+  const handleOpenMenu = (event) => {
+    setMenuAnchorEl(event.currentTarget);
+  };
+
+  const handleCloseMenu = () => {
+    setMenuAnchorEl(null);
+  };
+
+  const route = useNavigate()
+  const handleNavigate = ()=>{
+    localStorage.removeItem('Authorization');
+      route('/');
+  }
 
   const toggle = () =>{
     toggleDrawer(!currState);
@@ -86,9 +104,17 @@ const Header = ({toggleDrawer,currState}) => {
                 <AppsIcon />
               </Badge>
             </IconButton>
-            <IconButton color="inherit" aria-label="profile">
+            <IconButton color="inherit" aria-label="profile" onClick={handleOpenMenu}>
               <AccountCircleIcon />
             </IconButton>
+            <Menu
+            anchorEl={menuAnchorEl}
+            open={Boolean(menuAnchorEl)}
+            onClose={handleCloseMenu}
+          >
+            {/* <MenuItem onClick={handleEditNote}>Edit</MenuItem> */}
+            <MenuItem onClick={handleNavigate}>Logout</MenuItem>
+          </Menu>
           </div>
         </Toolbar>
       </AppBar>
