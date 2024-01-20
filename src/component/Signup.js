@@ -38,6 +38,7 @@ const SignupForm = () => {
         email:username,
         password:password
       })
+      route('/');
   }
   return (
     <div>

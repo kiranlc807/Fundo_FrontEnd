@@ -141,19 +141,29 @@ const NoteCard = ({ note,updateNoteList }) => {
     <div>
     <Paper
       elevation={3}
+      // style={{
+      //   padding: "16px",
+      //   marginBottom: "16px",
+      //   position: "relative",
+      //   backgroundColor: noteColor,
+      //   maxHeight: "fit-content",
+      //   maxWidth: "fit-content",
+      // }}
       style={{
         padding: "16px",
         marginBottom: "16px",
         position: "relative",
         backgroundColor: noteColor,
         maxHeight: "fit-content",
-        maxWidth: "fit-content",
+        maxWidth: "300px",
+        overflow: "hidden",
+         // Fixed width
       }}
     >
       <Typography variant="h6" gutterBottom onClick={handleNoteClick}>
         {title}
       </Typography>
-      <Typography variant="body1" paragraph onClick={handleNoteClick}>
+      <Typography variant="body1" paragraph onClick={handleNoteClick} >
         {description}
       </Typography>
       <div
@@ -161,7 +171,7 @@ const NoteCard = ({ note,updateNoteList }) => {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          maxWidth: "fit-content",
+          maxWidth: "300px",
         }}
       >
         <div>
@@ -213,6 +223,7 @@ const NoteCard = ({ note,updateNoteList }) => {
         open={editDialogOpen}
         handleClose={handleClose}
         noteObj={note}
+        updateNoteList={updateNoteList}
       />
     </div>
   );
