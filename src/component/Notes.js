@@ -55,8 +55,8 @@ const Notes = ()=>{
         <>       
             <div
                 style={{
-                marginTop: "20px",
-                marginLeft: "30%",
+                marginTop: "80px",
+                marginLeft: "25%",
                 marginRight:"25%",
                 display: "flex",
                 flexDirection: "column",
@@ -70,7 +70,7 @@ const Notes = ()=>{
                 overflow: "auto",
                 display: "flex",
                 flexWrap: "wrap", // Allow flex items to wrap to the next line
-                marginLeft: "30%",
+                marginLeft: "15%",
                 gap:"10px",
                 boxSizing: "border-box",
                 }}

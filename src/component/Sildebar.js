@@ -12,6 +12,7 @@ import {
   Delete as DeleteIcon,
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import './Slidbar.css'
 
 
 
@@ -27,9 +28,9 @@ const Sidebar = ({ drawerState, toggleDrawer }) => {
       anchor="left"
       open={drawerState}
       onClose={()=>toggleDrawer(false)}
-      sx={{ marginTop: "64px" ,backgroundColor:"white"}}
+      sx={{marginTop:"64px", zIndex:1}}
     >
-      <List>
+      <List style={{marginTop:"64px"}}>
         {/* Add your sidebar items here */}
         <ListItem button>
           <ListItemIcon>

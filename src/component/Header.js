@@ -44,7 +44,7 @@ const Header = ({toggleDrawer,currState}) => {
 
   return (
     <>
-      <AppBar position="static" color="default" >
+      <AppBar position="static" color="default" style={{position:"fixed",zIndex:"4"}}>
         <Toolbar>
           <IconButton
             size="large"
@@ -60,7 +60,7 @@ const Header = ({toggleDrawer,currState}) => {
             style={{
               display: "flex",
               alignItems: "center",
-              marginRight: "80px",
+              marginRight: "10%",
               marginLeft: "-15px",
             }}
           >

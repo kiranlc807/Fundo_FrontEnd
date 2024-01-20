@@ -41,6 +41,7 @@ const TrashContainer = ()=>{
                 marginLeft: "30%",
                 gap:"10px",
                 boxSizing: "border-box",
+                marginTop:"64px"
                 }}
             >
                 {noteList && noteList.map((note) => (
