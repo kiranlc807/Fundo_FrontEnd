@@ -15,6 +15,9 @@ import { ArchiveNote } from "../utils/noteapi";
 import { makeStyles } from "@mui/styles";
 import { UpdateNote } from "../utils/noteapi";
 import EditNote from "./EditNote";
+import UnarchiveIcon from '@mui/icons-material/Unarchive';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import RestoreFromTrashIcon from '@mui/icons-material/RestoreFromTrash';
 
 
 const useStyles = makeStyles({
@@ -87,8 +90,6 @@ const NoteCard = ({ note,updateNoteList }) => {
   };
 
   const handleClose = ()=>{
-    console.log(note);
-    console.log(editedTitle,editedDescription);
     setEditDialogOpen(false);
   }
 
@@ -110,10 +111,16 @@ const NoteCard = ({ note,updateNoteList }) => {
 
   const onDelete =async (noteId)=>{
     const del=updateNoteList(noteId,"trash");
-    if(del===null){
-      return;
-    }
     const res = await TrashNote(noteId);
+  }
+
+  const onUntrash = async (noteId)=>{
+    const untrash = updateNoteList(noteId,"untrash");
+    const res = await TrashNote(noteId);
+  }
+
+  const onDeletePermanent = async(noteID)=>{
+    const del = updateNoteList(noteID,"trash");
   }
 
   const handleColorClick = (color,noteId) => {
@@ -173,10 +180,10 @@ const NoteCard = ({ note,updateNoteList }) => {
           alignItems: "center",
           maxWidth: "300px",
         }}
-      >
+      >{!note.trashed?
         <div>
           <IconButton aria-label="Archive" onClick={() => onArchive(note._id)}>
-            <ArchiveIcon />
+            {note.archived?<UnarchiveIcon />:<ArchiveIcon/>}
           </IconButton>
           <IconButton aria-label="remind me">
             <NotificationsIcon />
@@ -215,7 +222,15 @@ const NoteCard = ({ note,updateNoteList }) => {
             {/* <MenuItem onClick={handleEditNote}>Edit</MenuItem> */}
             <MenuItem onClick={() => onDelete(note._id)}>Delete</MenuItem>
           </Menu>
-        </div>
+        </div>:<div style={{width: "300px",display:"flex",flexDirection:"row",gap:"70%"}}>
+        <IconButton aria-label="delete" onClick={() => onDeletePermanent(note._id)}>
+            <DeleteForeverIcon />
+        </IconButton>
+        <IconButton aria-label="restore" onClick={() => onUntrash(note._id)}>
+            <RestoreFromTrashIcon />
+        </IconButton>
+          </div>
+          }
       </div>
     </Paper>
     {/* Edit Description Dialog*/}

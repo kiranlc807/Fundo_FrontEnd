@@ -12,7 +12,7 @@ import { IconButton } from "@mui/material";
 
 const DashboardLayout = () => {
     const [open, setOpen] = useState(false)
-    useEffect(()=>console.log(open),[open]);
+    useEffect(()=>console.log(),[open]);
     return (
       <><div>
         <Header toggleDrawer={setOpen} currState={open} />
