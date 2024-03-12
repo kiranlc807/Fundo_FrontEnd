@@ -22,13 +22,18 @@ const TrashContainer = ()=>{
     }, []);
 
     const updateNoteList = async(noteId,action)=>{
-        const res = await DeleteNote(noteId);
         if(action==='trash'){
+            const res = await DeleteNote(noteId);
             let copy = noteList;
             let updatedCopy = copy.filter((note)=>noteId!==note._id)
             setNoteList([...updatedCopy]);
+            return res;
+        }else if(action === "untrash"){
+            let copy = noteList;
+            let updatedCopy = copy.filter((note)=>note._id!==noteId)
+            setNoteList([...updatedCopy])
         }
-        return res;
+        
     }
 
     return (

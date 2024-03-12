@@ -23,9 +23,6 @@ const Notes = ()=>{
     }, []);
 
 
-    console.log("noteList from DB ",noteList);
-
-
     const updateNoteList = (noteObj,action)=>{
         setNoteList([...noteList,noteObj]);
         if(action==='archive'){
@@ -34,6 +31,7 @@ const Notes = ()=>{
             setNoteList([...updatedCopy]);
         }
         else if(action==='trash'){
+            console.log("trash");
             let copy = noteList;
             let updatedCopy = copy.filter((note)=>noteObj!==note._id)
             setNoteList([...updatedCopy]);

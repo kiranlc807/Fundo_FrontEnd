@@ -14,7 +14,8 @@ function App() {
   const AppRoute = createBrowserRouter([
     {
       path: '/',
-      element: <LoginForm />
+      element: <LoginForm />,
+      // errorElement:
     },
     {
       path: '/signup',
